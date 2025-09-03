@@ -7,8 +7,6 @@ public class EnviarCorreosModificar {
 		final String from = "hacehambresiempre@gmail.com";
 		final String password = "msjc infv myuj ofxk";
 		
-		properties
-		
 	}
 
 }

@@ -2,13 +2,14 @@ package controlador;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
-import modelo.Conexion;
+import modelo.ClienteDAO;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 
 @WebServlet("/CertificadoClientePDF")
@@ -59,6 +60,12 @@ public class CertificadoClientePDF extends HttpServlet {
 
 			document.close();
 
+			ClienteDAO dao = new ClienteDAO();
+			dao.descargarcertificado("Certificado Descargado",
+					"Se ha descargado un certificado de la Tienda de Mascotas");
+
+		} catch (UnsupportedEncodingException e) {
+			throw new ServletException("Error de codificación al enviar correo", e);
 		} catch (Exception e) {
 			throw new ServletException("Error al generar el certificado PDF", e);
 		}

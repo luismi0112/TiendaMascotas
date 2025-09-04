@@ -3,16 +3,27 @@ package modelo;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+import jakarta.servlet.ServletException;
 
 public class ClienteDAO {
 
-	public boolean crearCliente(Cliente cliente) {
+	public void crearCliente(Cliente cliente) throws ServletException {
 		String sql = "INSERT INTO tbl_clientes (nombre, apellido, cedula, direccion, telefono) VALUES (?, ?, ?, ?, ?)";
 
 		Connection dbConnection = Conexion.conectarBD();
 		if (dbConnection == null) {
 			System.err.println("Error: No se pudo establecer la conexión a la base de datos.");
-			return false;
 		}
 
 		try (PreparedStatement pst = dbConnection.prepareStatement(sql)) {
@@ -23,11 +34,12 @@ public class ClienteDAO {
 			pst.setString(4, cliente.getDireccion());
 			pst.setString(5, cliente.getTelefono());
 
-			return pst.executeUpdate() > 0;
+			pst.executeUpdate();
+
+			crearcliente("¡¡ YUPI !!", "Se ah creado un nuevo registro, ve a verlo");
 
 		} catch (SQLException e) {
 			System.err.println("Error al registrar cliente: " + e.getMessage());
-			return false;
 		} finally {
 			try {
 				dbConnection.close();
@@ -56,7 +68,7 @@ public class ClienteDAO {
 			}
 
 		} catch (SQLException e) {
-			System.err.println("❌ Error al obtener clientes: " + e.getMessage());
+			System.err.println("Error al obtener clientes: " + e.getMessage());
 		} finally {
 			try {
 				dbConnection.close();
@@ -91,7 +103,7 @@ public class ClienteDAO {
 		return cliente;
 	}
 
-	public boolean actualizarCliente(Cliente cliente) {
+	public void actualizarCliente(Cliente cliente) {
 		String sql = "UPDATE tbl_clientes SET nombre = ?, apellido = ?, cedula = ?, direccion = ?, telefono = ? WHERE id_cliente = ?";
 
 		try (Connection dbConnection = Conexion.conectarBD();
@@ -104,26 +116,128 @@ public class ClienteDAO {
 			pst.setString(5, cliente.getTelefono());
 			pst.setInt(6, cliente.getId_cliente());
 
-			return pst.executeUpdate() > 0;
+			pst.executeUpdate();
 
 		} catch (SQLException e) {
 			System.err.println("Error al actualizar cliente: " + e.getMessage());
-			return false;
 		}
 	}
 
-	public boolean eliminarCliente(int idCliente) {
+	public void eliminarCliente(int idCliente) throws ServletException {
 		String sql = "DELETE FROM tbl_clientes WHERE id_cliente = ?";
 
 		try (Connection dbConnection = Conexion.conectarBD();
 				PreparedStatement pst = dbConnection.prepareStatement(sql)) {
 
 			pst.setInt(1, idCliente);
-			return pst.executeUpdate() > 0;
+			pst.executeUpdate();
+
+			eliminarcliente("¡¡ CUIDADO !!", "Se ah eliminado un registro, ve a verlo");
 
 		} catch (SQLException e) {
 			System.err.println("Error al eliminar cliente: " + e.getMessage());
-			return false;
+
+		}
+	}
+
+	public void crearcliente(String asunto, String mensaje) throws ServletException {
+
+		final String username = "hacehambresiempre@gmail.com";
+		final String password = "msjc infv myuj ofxk";
+		final String receptor = "lozadaluisfontalvo@gmail.com";
+
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
+
+		Session session = Session.getInstance(props, new Authenticator() {
+			@Override
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		});
+
+		try {
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(username));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receptor));
+			message.setSubject(asunto);
+			message.setText(mensaje);
+
+			Transport.send(message);
+
+		} catch (MessagingException e) {
+			throw new ServletException(e);
+		}
+
+	}
+
+	public void eliminarcliente(String asunto, String mensaje) throws ServletException {
+
+		final String username = "hacehambresiempre@gmail.com";
+		final String password = "msjc infv myuj ofxk";
+		final String receptor = "lozadaluisfontalvo@gmail.com";
+
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
+
+		Session session = Session.getInstance(props, new Authenticator() {
+			@Override
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		});
+
+		try {
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(username));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receptor));
+			message.setSubject(asunto);
+			message.setText(mensaje);
+
+			Transport.send(message);
+
+		} catch (MessagingException e) {
+			throw new ServletException(e);
+		}
+
+	}
+
+	public void descargarcertificado(String asunto, String mensaje) throws ServletException {
+
+		final String username = "hacehambresiempre@gmail.com";
+		final String password = "msjc infv myuj ofxk";
+		final String receptor = "lozadaluisfontalvo@gmail.com";
+
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
+
+		Session session = Session.getInstance(props, new Authenticator() {
+			@Override
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		});
+
+		try {
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(username));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receptor));
+			message.setSubject(asunto);
+			message.setText(mensaje);
+
+			Transport.send(message);
+
+		} catch (MessagingException e) {
+			throw new ServletException(e);
 		}
 	}
 }

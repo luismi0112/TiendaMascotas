@@ -16,19 +16,24 @@ public class EnviarCorreosSV extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		//obtener los datos enviados desde el formulario
 		String destinatario = request.getParameter("destinatario");
 		String asunto = request.getParameter("asunto");
 		String mensajeTexto = request.getParameter("mensaje");
 
+		//cuenta de gmail que enviara el correo
 		final String username = "hacehambresiempre@gmail.com";
+		//contraseña generica de google
 		final String password = "msjc infv myuj ofxk";
 
+		//configuracion del servidor smtp de gmail
 		Properties props = new Properties();
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.starttls.enable", "true");
-		props.put("mail.smtp.host", "smtp.gmail.com");
-		props.put("mail.smtp.port", "587");
+		props.put("mail.smtp.auth", "true");//requiere autenticacion
+		props.put("mail.smtp.starttls.enable", "true");//habilitar cifrado
+		props.put("mail.smtp.host", "smtp.gmail.com");//servidor de gmail
+		props.put("mail.smtp.port", "587");//puerto TLS de gmail
 
+		//cerrar sesion con autenticacion
 		Session session = Session.getInstance(props, new Authenticator() {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
@@ -41,9 +46,11 @@ public class EnviarCorreosSV extends HttpServlet {
 			message.setFrom(new InternetAddress(username));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
 			message.setSubject(asunto);
-			message.setText(mensajeTexto);
+			message.setText(mensajeTexto);//cuerpo del mensaje
 
+			//enviar el correo
 			Transport.send(message);
+			//confirmar envio
 			response.getWriter().println("Correo enviado con éxito a " + destinatario);
 
 		} catch (MessagingException e) {

@@ -93,8 +93,21 @@ form button {
 </style>
 </head>
 <body>
+
 	<div class="container">
-		<h1>Bienvenido a la Gestión de Clientes</h1>
+		<%
+		//recuperar el usuario de la sesion
+		String usuario = (String) session.getAttribute("nombre_usuario");
+		//si no hay usuario logeado volver al login 
+		if (usuario == null) {
+			response.sendRedirect("login.jsp");
+		}
+		%>
+
+		<!--mostrar el nombre del usuario-->
+		<h1>
+			Bienvenido a la Gestion de Clientes
+			<%=usuario%></h1>
 		<h2>Para comenzar, puedes:</h2>
 		<p>
 			<a href="ClienteControlador?accion=listar">Ver lista de clientes</a>
@@ -113,6 +126,7 @@ form button {
 				Certificado PDF</a>
 		</p>
 
+		<!--formulario para enviar correos-->
 		<h2>Enviar Correo</h2>
 		<form action="EnviarCorreosSV" method="post">
 			<label for="destinatario">Destinatario:</label> <input type="email"
@@ -122,6 +136,11 @@ form button {
 			<textarea id="mensaje" name="mensaje" rows="5" required></textarea>
 
 			<button type="submit">Enviar Correo</button>
+		</form>
+		<form action="${pageContext.request.contextPath}/cerrarsesionSV"
+			method="get">
+			<button type="submit" style="background-color: #dc3545;">Cerrar
+				sesión</button>
 		</form>
 	</div>
 </body>

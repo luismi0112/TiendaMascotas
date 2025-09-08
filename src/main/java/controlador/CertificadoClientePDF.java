@@ -24,16 +24,19 @@ public class CertificadoClientePDF extends HttpServlet {
 		response.setHeader("Content-Disposition", "attachment; filename=CertificadoCliente.pdf");
 
 		try {
+			//crear documento pdf y asociarlo a la respuesta
 			Document document = new Document();
 			PdfWriter.getInstance(document, response.getOutputStream());
 			document.open();
 
+			//titulo
 			Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18, BaseColor.BLACK);
 			Paragraph title = new Paragraph("CERTIFICADO", titleFont);
 			title.setAlignment(Element.ALIGN_CENTER);
 			title.setSpacingAfter(30);
 			document.add(title);
 
+			//text principal
 			Font textFont = FontFactory.getFont(FontFactory.HELVETICA, 12, BaseColor.BLACK);
 			Paragraph contenido = new Paragraph("Se certifica que el cliente pertenece a la Tienda de Mascotas "
 					+ "y se encuentra registrado en nuestra base de datos institucional.\n\n", textFont);
@@ -48,18 +51,21 @@ public class CertificadoClientePDF extends HttpServlet {
 			constancia.setSpacingAfter(20);
 			document.add(constancia);
 
+			//fecha actual
 			LocalDate fecha = LocalDate.now();
 			Paragraph fechaParrafo = new Paragraph(
 					"En constancia, se firma el presente certificado a los " + fecha + ".", textFont);
 			fechaParrafo.setSpacingAfter(40);
 			document.add(fechaParrafo);
 
+			//espacio para firma
 			Paragraph firma = new Paragraph("________________________\nFirma autorizada", textFont);
 			firma.setAlignment(Element.ALIGN_CENTER);
 			document.add(firma);
 
 			document.close();
 
+			//registrar en la BD que se descargo un certificado
 			ClienteDAO dao = new ClienteDAO();
 			dao.descargarcertificado("Certificado Descargado",
 					"Se ha descargado un certificado de la Tienda de Mascotas");

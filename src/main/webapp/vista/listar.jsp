@@ -100,9 +100,11 @@ table tr:hover {
 	<div class="container">
 		<h1>Clientes Registrados</h1>
 
+		<!-- boton para registrar cliente -->
 		<a href="ClienteControlador?accion=nuevo" class="btn">+ Registrar
 			nuevo cliente</a>
 
+		<!-- tabla para Clientes -->
 		<table>
 			<thead>
 				<tr>
@@ -117,20 +119,26 @@ table tr:hover {
 			</thead>
 			<tbody>
 				<%
+				//recuperamos la lista de cliente enviaa desde el controlador
 				List<Cliente> clientes = (List<Cliente>) request.getAttribute("clientes");
+				//se valida si la lista no esta vacia
 				if (clientes != null && !clientes.isEmpty()) {
 					for (Cliente c : clientes) {
 				%>
 				<tr>
+					<!-- se imprimen los datos de cada cliente -->
 					<td><%=c.getId_cliente()%></td>
 					<td><%=c.getNombre()%></td>
 					<td><%=c.getApellido()%></td>
 					<td><%=c.getCedula()%></td>
 					<td><%=c.getDireccion()%></td>
 					<td><%=c.getTelefono()%></td>
-					<td class="acciones"><a
+					<!-- botones de acciones por cada fila -->
+					<td class="acciones">
+						<!-- enlace para editar --> <a
 						href="ClienteControlador?accion=editar&id=<%=c.getId_cliente()%>"
-						class="editar">Editar</a> <a
+						class="editar">Editar</a> <!-- enlace para eliminar con confirmacion -->
+						<a
 						href="ClienteControlador?accion=eliminar&id=<%=c.getId_cliente()%>"
 						class="eliminar"
 						onclick="return confirm('¿Estás seguro de eliminar este cliente?');">Eliminar</a>
@@ -139,9 +147,10 @@ table tr:hover {
 				<%
 				}
 				} else {
+				//si no hay clientes mostrar mensaje
 				%>
 				<tr>
-					<td colspan="7" class="mensaje">No hay clientes registrados.</td>
+					<td colspan="7" class="mensaje">No hay clientes registrados</td>
 				</tr>
 				<%
 				}

@@ -31,7 +31,7 @@ public class TestConexion extends HttpServlet {
 				+ "<h1>Prueba de Conexión a la Base de Datos</h1>";
 
 		if (Conexion.conectarBD() != null) {
-			html += "<p class='success'>✅ Conectado correctamente a la base de datos.</p>";
+			html += "<p class='success'>✅Conectado correctamente a la base de datos.</p>";
 		} else {
 			html += "<p class='error'>❌ No se pudo conectar a la base de datos.</p>";
 		}

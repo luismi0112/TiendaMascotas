@@ -18,6 +18,7 @@ import jakarta.servlet.ServletException;
 
 public class ClienteDAO {
 
+	// metodo para crear nuevo cliente en la BD
 	public void crearCliente(Cliente cliente) throws ServletException {
 		String sql = "INSERT INTO tbl_clientes (nombre, apellido, cedula, direccion, telefono) VALUES (?, ?, ?, ?, ?)";
 
@@ -28,6 +29,7 @@ public class ClienteDAO {
 
 		try (PreparedStatement pst = dbConnection.prepareStatement(sql)) {
 
+			// asignar valores al Insert
 			pst.setString(1, cliente.getNombre());
 			pst.setString(2, cliente.getApellido());
 			pst.setString(3, cliente.getCedula());
@@ -36,6 +38,7 @@ public class ClienteDAO {
 
 			pst.executeUpdate();
 
+			// Enviar correo de notificacion
 			crearcliente("¡¡ YUPI !!", "Se ah creado un nuevo registro, ve a verlo");
 
 		} catch (SQLException e) {
@@ -49,6 +52,7 @@ public class ClienteDAO {
 		}
 	}
 
+	// obtiene todos clientes registrados en la BD
 	public List<Cliente> obtenerTodos() {
 		List<Cliente> lista = new ArrayList<>();
 		String sql = "SELECT id_cliente, nombre, apellido, cedula, direccion, telefono FROM tbl_clientes";
@@ -61,6 +65,7 @@ public class ClienteDAO {
 
 		try (PreparedStatement pst = dbConnection.prepareStatement(sql); ResultSet rs = pst.executeQuery()) {
 
+			//recorrer los resultados y llenar lista
 			while (rs.next()) {
 				Cliente cliente = new Cliente(rs.getInt("id_cliente"), rs.getString("nombre"), rs.getString("apellido"),
 						rs.getString("cedula"), rs.getString("direccion"), rs.getString("telefono"));
@@ -80,6 +85,7 @@ public class ClienteDAO {
 		return lista;
 	}
 
+	//busca un cliente en la BD por ID
 	public Cliente obtenerPorId(int idCliente) {
 		String sql = "SELECT id_cliente, nombre, apellido, cedula, direccion, telefono FROM tbl_clientes WHERE id_cliente = ?";
 		Cliente cliente = null;
@@ -103,12 +109,14 @@ public class ClienteDAO {
 		return cliente;
 	}
 
+	//actualiza los datos de un cliente existente
 	public void actualizarCliente(Cliente cliente) {
 		String sql = "UPDATE tbl_clientes SET nombre = ?, apellido = ?, cedula = ?, direccion = ?, telefono = ? WHERE id_cliente = ?";
 
 		try (Connection dbConnection = Conexion.conectarBD();
 				PreparedStatement pst = dbConnection.prepareStatement(sql)) {
 
+			//asignar valores al actualizar
 			pst.setString(1, cliente.getNombre());
 			pst.setString(2, cliente.getApellido());
 			pst.setString(3, cliente.getCedula());
@@ -123,6 +131,7 @@ public class ClienteDAO {
 		}
 	}
 
+	//elimina un cliente por su id y enviar un correo de notificacion
 	public void eliminarCliente(int idCliente) throws ServletException {
 		String sql = "DELETE FROM tbl_clientes WHERE id_cliente = ?";
 
@@ -132,6 +141,7 @@ public class ClienteDAO {
 			pst.setInt(1, idCliente);
 			pst.executeUpdate();
 
+			//enviar correo de advertencia
 			eliminarcliente("¡¡ CUIDADO !!", "Se ah eliminado un registro, ve a verlo");
 
 		} catch (SQLException e) {
@@ -140,6 +150,7 @@ public class ClienteDAO {
 		}
 	}
 
+	//metodo para enviar correo al crear cliente
 	public void crearcliente(String asunto, String mensaje) throws ServletException {
 
 		final String username = "hacehambresiempre@gmail.com";
@@ -174,6 +185,7 @@ public class ClienteDAO {
 
 	}
 
+	//metodo para enviar correo al eliminar un cliente
 	public void eliminarcliente(String asunto, String mensaje) throws ServletException {
 
 		final String username = "hacehambresiempre@gmail.com";
@@ -208,6 +220,7 @@ public class ClienteDAO {
 
 	}
 
+	//metodo para enviar correo al descargar certificado
 	public void descargarcertificado(String asunto, String mensaje) throws ServletException {
 
 		final String username = "hacehambresiempre@gmail.com";

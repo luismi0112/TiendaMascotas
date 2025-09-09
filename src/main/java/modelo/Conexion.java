@@ -12,7 +12,7 @@ public class Conexion {
 		String url = "jdbc:mysql://localhost:3306/bd_mascotas?useSSL=false&serverTimezone=UTC";
 		// usuario y contrseña de mysql
 		String usuario = "root";
-		String contraseña = "2556229";
+		String contraseña = "2556229";	
 
 		try {
 			// cargar driver de mysql

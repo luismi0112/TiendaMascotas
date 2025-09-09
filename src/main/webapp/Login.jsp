@@ -78,7 +78,7 @@ input[type="submit"]:hover {
 		if ("ok".equals(login)) {
 		%>
 		<p class="msg success">
-			¡Bienvenido
+			¡Bienvenido!
 			<%=session.getAttribute("nombre_usuario")%>!
 		</p>
 		<%

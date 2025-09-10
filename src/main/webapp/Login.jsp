@@ -30,7 +30,12 @@ h2 {
 	color: #333;
 }
 
-input[type="email"], input[type="password"] {
+p {
+	margin-bottom: 20px;
+	color: #333;
+}
+
+input[type="email"], input[type="password"], select {
 	width: 100%;
 	padding: 10px;
 	margin: 8px 0 15px 0;
@@ -93,11 +98,14 @@ input[type="submit"]:hover {
 		}
 		%>
 
-
 		<h2>Iniciar sesión</h2>
 		<form action="${pageContext.request.contextPath}/LoginSV"
 			method="post">
-			<input type="email" name="correo" placeholder="Correo electrónico"
+			<p>seleccione su Rol</p>
+			<select name="rol" required>
+				<option value="Administrador">Administrador</option>
+				<option value="Empleado">Empleado</option>
+			</select> <input type="email" name="correo" placeholder="Correo electrónico"
 				required> <input type="password" name="clave"
 				placeholder="Contraseña" required> <input type="submit"
 				value="Ingresar">
@@ -110,6 +118,14 @@ input[type="submit"]:hover {
 		<%
 		}
 		%>
+		<%
+		if ("rol_invalido".equals(request.getParameter("login"))) {
+		%>
+		<p class="msg error">Rol incorrecto para este usuario</p>
+		<%
+		}
+		%>
+
 
 
 	</div>

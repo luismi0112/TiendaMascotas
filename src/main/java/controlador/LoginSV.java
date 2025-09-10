@@ -18,6 +18,7 @@ public class LoginSV extends HttpServlet {
 
 		String correo = request.getParameter("correo");
 		String clave = request.getParameter("clave");
+		String rolIngresado = request.getParameter("rol");
 
 		try (Connection conectarBD = Conexion.conectarBD()) {
 			if (conectarBD != null) {
@@ -30,11 +31,19 @@ public class LoginSV extends HttpServlet {
 				ResultSet rs = ps.executeQuery();
 
 				if (rs.next()) {
-					HttpSession sesion = request.getSession();
-					sesion.setAttribute("nombre_usuario", rs.getString("nombre_usuario"));
-					sesion.setAttribute("rol", rs.getString("rol"));
+					String rolBD = rs.getString("rol");
 
-					response.sendRedirect("index.jsp?login=ok");
+					// validamos que el rol del formulario coincida con el de la BD
+					if (rolBD.equalsIgnoreCase(rolIngresado)) {
+						HttpSession sesion = request.getSession();
+						sesion.setAttribute("nombre_usuario", rs.getString("nombre_usuario"));
+						sesion.setAttribute("rol", rolBD);
+
+						response.sendRedirect("index.jsp?login=ok");
+					} else {
+						// rol incorrecto
+						response.sendRedirect("Login.jsp?login=rol_invalido");
+					}
 				} else {
 					response.sendRedirect("Login.jsp?login=fail");
 				}

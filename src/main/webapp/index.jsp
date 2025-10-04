@@ -103,8 +103,6 @@ form button {
 			response.sendRedirect("login.jsp");
 		}
 		%>
-
-		<!--mostrar el nombre del usuario-->
 		<h1>
 			Bienvenido a la Gestion de Clientes
 			<%=usuario%></h1>
@@ -116,8 +114,10 @@ form button {
 			<a href="ClienteControlador?accion=nuevo">Registrar cliente</a>
 		</p>
 		<p>
-			<a href="TestConexion?accion=nuevo">Probar Conexion</a>
+			<a href="registrarmascotasSV?accion=nuevo">Registrar Mascota</a>
 		</p>
+		<p>
+			<a href="TestConexion?accion=nuevo">Probar Conexion</a>
 		<p>
 			<a href="ReporteClientespdf?accion=nuevo">Descargar Reporte PDF</a>
 		</p>

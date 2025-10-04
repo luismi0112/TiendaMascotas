@@ -1,9 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@ page import="java.util.*, modelo.Cliente"%>
+<%@ page import="java.util.*, modelo.Mascota"%>
 <html>
 <head>
-<title>Lista de Clientes</title>
+<title>Lista de mascotas</title>
 <style>
+/* --- ESTILOS --- */
 body {
 	font-family: Arial, sans-serif;
 	background-color: #f0f2f5;
@@ -41,7 +42,6 @@ h1 {
 	transform: translateY(-2px);
 }
 
-/* 🔎 Estilos para el formulario de búsqueda */
 .search-box {
 	margin-top: 20px;
 	display: flex;
@@ -138,51 +138,49 @@ table tr:hover {
 </head>
 <body>
 	<div class="container">
-		<h1>Clientes Registrados</h1>
+		<h1>Mascotas Registradas</h1>
 
-		<!-- boton para registrar cliente -->
-		<a href="ClienteControlador?accion=nuevo" class="btn">+ Registrar
-			nuevo cliente</a>
+		<!-- Botón para registrar nueva mascota -->
+		<a href="registrarmascotasSV?accion=nuevo" class="btn">Registrar
+			nueva mascota</a>
 
-		<!-- 🔎 Formulario de búsqueda con estilo -->
-		<form action="ClienteControlador" method="get" class="search-box">
+		<!-- Formulario de búsqueda -->
+		<form action="registrarmascotasSV" method="get" class="search-box">
 			<input type="hidden" name="accion" value="buscar"> <input
 				type="text" name="filtro" placeholder="Buscar por ID o Nombre">
 			<button type="submit">Buscar</button>
 		</form>
 
-		<!-- tabla para Clientes -->
+		<!-- Tabla de mascotas -->
 		<table>
 			<thead>
 				<tr>
 					<th>ID</th>
 					<th>Nombre</th>
-					<th>Apellido</th>
-					<th>Cédula</th>
-					<th>Dirección</th>
-					<th>Teléfono</th>
+					<th>Tipo</th>
+					<th>Género</th>
+					<th>Raza</th>
 					<th>Acciones</th>
 				</tr>
 			</thead>
 			<tbody>
 				<%
-				List<Cliente> clientes = (List<Cliente>) request.getAttribute("clientes");
-				if (clientes != null && !clientes.isEmpty()) {
-					for (Cliente c : clientes) {
+				List<Mascota> mascotas = (List<Mascota>) request.getAttribute("mascotas");
+				if (mascotas != null && !mascotas.isEmpty()) {
+					for (Mascota m : mascotas) {
 				%>
 				<tr>
-					<td><%=c.getId_cliente()%></td>
-					<td><%=c.getNombre()%></td>
-					<td><%=c.getApellido()%></td>
-					<td><%=c.getCedula()%></td>
-					<td><%=c.getDireccion()%></td>
-					<td><%=c.getTelefono()%></td>
+					<td><%=m.getId_mascota()%></td>
+					<td><%=m.getNombre()%></td>
+					<td><%=m.getTipo()%></td>
+					<td><%=m.getGenero()%></td>
+					<td><%=m.getRaza()%></td>
 					<td class="acciones"><a
-						href="ClienteControlador?accion=editar&id=<%=c.getId_cliente()%>"
+						href="registrarmascotasSV?accion=editar&id=<%=m.getId_mascota()%>"
 						class="editar">Editar</a> <a
-						href="ClienteControlador?accion=eliminar&id=<%=c.getId_cliente()%>"
+						href="registrarmascotasSV?accion=eliminar&id=<%=m.getId_mascota()%>"
 						class="eliminar"
-						onclick="return confirm('¿Estás seguro de eliminar este cliente?');">Eliminar</a>
+						onclick="return confirm('¿Estás seguro de eliminar esta mascota?');">Eliminar</a>
 					</td>
 				</tr>
 				<%
@@ -190,7 +188,7 @@ table tr:hover {
 				} else {
 				%>
 				<tr>
-					<td colspan="7" class="mensaje">No hay clientes registrados</td>
+					<td colspan="6" class="mensaje">No hay mascotas registradas</td>
 				</tr>
 				<%
 				}

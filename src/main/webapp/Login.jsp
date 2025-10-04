@@ -94,7 +94,7 @@ input[type="submit"]:hover {
 		} else if ("error".equals(login)) {
 		%>
 		<p class="msg error">Error en el servidor</p>
-		<%
+		<%	
 		}
 		%>
 
@@ -125,9 +125,6 @@ input[type="submit"]:hover {
 		<%
 		}
 		%>
-
-
-
 	</div>
 
 </body>

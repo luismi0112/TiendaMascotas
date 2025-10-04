@@ -25,6 +25,13 @@ public class ClienteControlador extends HttpServlet {
 			accion = "listar";
 
 		switch (accion) {
+		case "buscar":
+			String filtro = request.getParameter("filtro");
+			List<Cliente> clientesFiltrados = clienteDAO.buscarClientes(filtro);
+			request.setAttribute("clientes", clientesFiltrados);
+			request.getRequestDispatcher("/vista/listar.jsp").forward(request, response);
+			break;
+
 		case "listar":
 			List<Cliente> clientes = clienteDAO.obtenerTodos();
 			request.setAttribute("clientes", clientes);
@@ -51,13 +58,14 @@ public class ClienteControlador extends HttpServlet {
 				int id = Integer.parseInt(request.getParameter("id"));
 				clienteDAO.eliminarCliente(id);
 			} catch (NumberFormatException e) {
-				
+
 			}
 			response.sendRedirect("ClienteControlador?accion=listar");
 			break;
 
 		default:
 			response.sendRedirect("ClienteControlador?accion=listar");
+
 		}
 	}
 
@@ -92,7 +100,7 @@ public class ClienteControlador extends HttpServlet {
 
 				clienteDAO.actualizarCliente(cliente);
 			} catch (NumberFormatException e) {
-				
+
 			}
 			response.sendRedirect("ClienteControlador?accion=listar");
 

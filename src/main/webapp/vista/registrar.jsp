@@ -5,18 +5,27 @@
 <style>
 body {
 	font-family: Arial, sans-serif;
-	background-color: #f0f2f5;
 	margin: 0;
-	padding: 0;
+	padding: 40px;
+	background: url('vista/familia-con-perro.png') no-repeat center center
+		fixed;
+	background-size: cover;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	color: #333;
 }
 
 .container {
 	max-width: 600px;
-	margin: 50px auto;
-	background: white;
+	width: 100%;
+	background: rgba(255, 255, 255, 0.3);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
 	padding: 30px;
-	border-radius: 10px;
-	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+	border-radius: 12px;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 h1 {

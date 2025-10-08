@@ -6,18 +6,27 @@
 <style>
 body {
 	font-family: Arial, sans-serif;
-	background-color: #f0f2f5;
 	margin: 0;
-	padding: 0;
+	padding: 40px;
+	background: url('vista/4323-shutterstock_13122312712028129.png') no-repeat center center
+		fixed;
+	background-size: cover;
+	color: #333;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
 }
 
 .container {
 	max-width: 1000px;
-	margin: 50px auto;
-	background: white;
+	width: 100%;
+	background: rgba(255, 255, 255, 0.3);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
 	padding: 30px;
-	border-radius: 10px;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	border-radius: 12px;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 h1 {
@@ -41,7 +50,6 @@ h1 {
 	transform: translateY(-2px);
 }
 
-/* 🔎 Estilos para el formulario de búsqueda */
 .search-box {
 	margin-top: 20px;
 	display: flex;
@@ -86,6 +94,9 @@ table {
 	border-collapse: collapse;
 	margin-top: 20px;
 	text-align: left;
+	background: rgba(255, 255, 255, 0.85);
+	border-radius: 8px;
+	overflow: hidden;
 }
 
 table thead {
@@ -140,18 +151,15 @@ table tr:hover {
 	<div class="container">
 		<h1>Clientes Registrados</h1>
 
-		<!-- boton para registrar cliente -->
 		<a href="ClienteControlador?accion=nuevo" class="btn">+ Registrar
 			nuevo cliente</a>
 
-		<!-- 🔎 Formulario de búsqueda con estilo -->
 		<form action="ClienteControlador" method="get" class="search-box">
 			<input type="hidden" name="accion" value="buscar"> <input
 				type="text" name="filtro" placeholder="Buscar por ID o Nombre">
 			<button type="submit">Buscar</button>
 		</form>
 
-		<!-- tabla para Clientes -->
 		<table>
 			<thead>
 				<tr>

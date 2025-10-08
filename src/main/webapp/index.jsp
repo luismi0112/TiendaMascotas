@@ -1,147 +1,294 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-<meta charset="UTF-8" />
-<title>Gestión de Clientes - Inicio</title>
+<meta charset="UTF-8">
+<title>PetShop Manager</title>
+
+<!-- Google Fonts -->
+<link
+	href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap"
+	rel="stylesheet">
+<!-- Iconos Remix -->
+<link
+	href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css"
+	rel="stylesheet">
+
 <style>
+:root {
+	--primary: #007BFF;
+	--secondary: #17a2b8;
+	--danger: #dc3545;
+	--glass: rgba(255, 255, 255, 0.25);
+	--form: rgba(255, 255, 255, 0.85);
+	--radius: 16px;
+	--text-dark: #333;
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
 body {
-	font-family: Arial, sans-serif;
-	margin: 40px;
-	background-color: #f0f2f5;
-	color: #333;
+	font-family: 'Quicksand', sans-serif;
+	background:
+		url('${pageContext.request.contextPath}/vista/istockphoto-992637094-612x612.png')
+		no-repeat center center fixed;
+	background-size: cover;
+	min-height: 100vh;
+	color: var(--text-dark);
 }
 
-h1 {
-	color: #007BFF;
-}
-
-a, button {
-	text-decoration: none;
+/* Header */
+header {
+	background-color: var(--primary);
 	color: white;
-	background-color: #007BFF;
-	padding: 14px 25px;
-	border-radius: 6px;
-	border: none;
-	cursor: pointer;
-	font-size: 16px;
-	display: inline-block;
-	margin: 8px 0;
-	transition: background-color 0.3s ease, transform 0.2s ease;
+	padding: 20px 40px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
-a:hover, button:hover {
-	background-color: #0056b3;
-	transform: translateY(-2px);
+header h1 {
+	font-size: 24px;
+	margin: 0;
 }
 
-.container {
-	max-width: 700px;
-	margin: auto;
-	text-align: center;
-	background: white;
-	padding: 30px;
-	border-radius: 8px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-form {
-	background: #f9f9f9;
-	padding: 25px;
-	border-radius: 8px;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-	text-align: left;
-	margin-top: 20px;
-	border: 1px solid #ddd;
-}
-
-form label {
+nav a {
+	color: white;
+	text-decoration: none;
+	margin-left: 20px;
 	font-weight: bold;
-	color: #007BFF;
+	transition: color 0.3s;
+}
+
+nav a:hover {
+	color: #d1ecf1;
+}
+
+/* Hero */
+.hero {
+	text-align: center;
+	padding: 60px 20px;
+	background: var(--glass);
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
+	margin: 40px auto;
+	max-width: 900px;
+	border-radius: var(--radius);
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.hero h2 {
+	font-size: 32px;
+	color: var(--primary);
+	margin-bottom: 10px;
+}
+
+.hero p {
+	font-size: 18px;
+	color: #444;
+}
+
+/* Services */
+.services {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	gap: 20px;
+	padding: 40px;
+	max-width: 1000px;
+	margin: auto;
+}
+
+.service-card {
+	background: var(--form);
+	padding: 20px;
+	border-radius: var(--radius);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	text-align: center;
+	transition: transform 0.3s;
+}
+
+.service-card:hover {
+	transform: translateY(-5px);
+}
+
+.service-card i {
+	font-size: 32px;
+	color: var(--primary);
+	margin-bottom: 10px;
+}
+
+.service-card h3 {
+	margin-bottom: 10px;
+	color: var(--primary);
+}
+
+.service-card a {
+	display: block;
+	text-decoration: none;
+	color: inherit;
+}
+
+/* Contact Form */
+.contact {
+	background: var(--form);
+	padding: 30px;
+	border-radius: var(--radius);
+	max-width: 600px;
+	margin: 60px auto;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.contact h3 {
+	text-align: center;
+	color: var(--primary);
+	margin-bottom: 20px;
+}
+
+.contact label {
 	display: block;
 	margin-bottom: 6px;
-	font-size: 14px;
+	font-weight: bold;
+	color: var(--primary);
 }
 
-form input[type="email"], form input[type="text"], form textarea {
+.contact input, .contact textarea {
 	width: 100%;
 	padding: 12px;
-	border: 1px solid #ccc;
-	border-radius: 6px;
-	font-size: 14px;
-	box-sizing: border-box;
 	margin-bottom: 15px;
-	transition: border-color 0.3s, box-shadow 0.3s;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	font-size: 14px;
 }
 
-form input:focus, form textarea:focus {
-	border-color: #007BFF;
-	box-shadow: 0 0 5px rgba(0, 123, 255, 0.4);
-	outline: none;
-}
-
-form textarea {
-	resize: vertical;
-}
-
-form button {
+.contact button {
 	width: 100%;
+	background-color: var(--secondary);
+	color: white;
+	border: none;
 	padding: 12px;
+	border-radius: var(--radius);
 	font-size: 16px;
+	font-weight: bold;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.contact button:hover {
+	background-color: #138496;
+}
+
+/* Footer */
+footer {
+	background-color: var(--primary);
+	color: white;
+	text-align: center;
+	padding: 20px;
+	margin-top: 40px;
 }
 </style>
 </head>
 <body>
 
-	<div class="container">
-		<%
-		//recuperar el usuario de la sesion
-		String usuario = (String) session.getAttribute("nombre_usuario");
-		//si no hay usuario logeado volver al login 
-		if (usuario == null) {
-			response.sendRedirect("login.jsp");
-		}
-		%>
+	<header>
 		<h1>
-			Bienvenido a la Gestion de Clientes
-			<%=usuario%></h1>
-		<h2>Para comenzar, puedes:</h2>
-		<p>
-			<a href="ClienteControlador?accion=listar">Ver lista de clientes</a>
-		</p>
-		<p>
-			<a href="ClienteControlador?accion=nuevo">Registrar cliente</a>
-		</p>
-		<p>
-			<a href="registrarmascotasSV?accion=nuevo">Registrar Mascota</a>
-		</p>
-		<p>
-			<a href="TestConexion?accion=nuevo">Probar Conexion</a>
-		<p>
-			<a href="ReporteClientespdf?accion=nuevo">Descargar Reporte PDF</a>
-		</p>
-		<p>
-			<a href="CertificadoClientePDF?accion=nuevo">Descargar
-				Certificado PDF</a>
-		</p>
+			<i class="ri-store-line"></i> Tienda de Mascotas Virtual
+		</h1>
+		<nav>
+			<a
+				href="${pageContext.request.contextPath}/ClienteControlador?accion=listar">Clientes</a>
+			<a
+				href="${pageContext.request.contextPath}/registrarmascotasSV?accion=nuevo">Mascotas</a>
+			<a
+				href="${pageContext.request.contextPath}/ReporteClientespdf?accion=nuevo">Reportes</a>
+			<a
+				href="${pageContext.request.contextPath}/CertificadoClientePDF?accion=nuevo">Certificados</a>
+			<a href="#contacto">Contacto</a>
+		</nav>
+	</header>
 
-		<!--formulario para enviar correos-->
-		<h2>Enviar Correo</h2>
-		<form action="EnviarCorreosSV" method="post">
-			<label for="destinatario">Destinatario:</label> <input type="email"
-				id="destinatario" name="destinatario" required> <label
-				for="asunto">Asunto:</label> <input type="text" id="asunto"
+	<section class="hero">
+		<h2>Bienvenido a tu tienda de mascotas</h2>
+		<p>Gestiona clientes, mascotas, reportes y certificados desde un
+			entorno moderno y amigable.</p>
+	</section>
+
+	<section class="services">
+		<div class="service-card">
+			<a
+				href="${pageContext.request.contextPath}/ClienteControlador?accion=listar">
+				<i class="ri-user-3-line"></i>
+				<h3>Ver Clientes</h3>
+				<p>Consulta y administra la información de tus clientes
+					registrados.</p>
+			</a>
+		</div>
+		<div class="service-card">
+			<a
+				href="${pageContext.request.contextPath}/ClienteControlador?accion=nuevo">
+				<i class="ri-user-add-line"></i>
+				<h3>Registrar Cliente</h3>
+				<p>Agrega nuevos clientes al sistema con sus datos completos.</p>
+			</a>
+		</div>
+		<div class="service-card">
+			<a
+				href="${pageContext.request.contextPath}/registrarmascotasSV?accion=nuevo">
+				<i class="ri-paw-line"></i>
+				<h3>Registrar Mascota</h3>
+				<p>Registra mascotas por tipo, raza, género y más.</p>
+			</a>
+		</div>
+		<div class="service-card">
+			<a
+				href="${pageContext.request.contextPath}/ReporteClientespdf?accion=nuevo">
+				<i class="ri-file-pdf-2-line"></i>
+				<h3>Reporte PDF</h3>
+				<p>Genera reportes detallados de clientes en formato PDF.</p>
+			</a>
+		</div>
+		<div class="service-card">
+			<a
+				href="${pageContext.request.contextPath}/CertificadoClientePDF?accion=nuevo">
+				<i class="ri-award-line"></i>
+				<h3>Certificado PDF</h3>
+				<p>Descarga certificados personalizados para tus clientes.</p>
+			</a>
+		</div>
+		<div class="service-card">
+			<a href="#contacto"> <i class="ri-mail-send-line"></i>
+				<h3>Enviar Correo</h3>
+				<p>Comunícate directamente con tus clientes desde el sistema.</p>
+			</a>
+		</div>
+	</section>
+
+	<section class="contact" id="contacto">
+		<h3>
+			<i class="ri-chat-3-line"></i> Contáctanos
+		</h3>
+		<form action="${pageContext.request.contextPath}/EnviarCorreosSV"
+			method="post">
+			<label for="destinatario">Correo destinatario:</label> <input
+				type="email" id="destinatario" name="destinatario" required>
+
+			<label for="asunto">Asunto:</label> <input type="text" id="asunto"
 				name="asunto" required> <label for="mensaje">Mensaje:</label>
-			<textarea id="mensaje" name="mensaje" rows="5" required></textarea>
+			<textarea id="mensaje" name="mensaje" rows="4" required></textarea>
 
-			<button type="submit">Enviar Correo</button>
+			<button type="submit">
+				<i class="ri-send-plane-line"></i> Enviar
+			</button>
 		</form>
-		<form action="${pageContext.request.contextPath}/cerrarsesionSV"
-			method="get">
-			<button type="submit" style="background-color: #dc3545;">Cerrar
-				sesión</button>
-		</form>
-	</div>
+	</section>
+
+	<footer>
+		<p>&copy; Tienda de mascotas Virtual 2025.</p>
+	</footer>
+
 </body>
 </html>
